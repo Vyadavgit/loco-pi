@@ -22,8 +22,8 @@ pwm2 = GPIO.PWM(Enb, 100)
 pwm2.start(0)
 
 # IR-08H Avoid Sensor (EN_IR, OUT_IR, PWR_IR, GND_IR)
-EN_IR, OUT_IR = 5, 6
-GPIO.setup(EN_IR, GPIO.OUT)
+OUT_IR = 5
+# GPIO.setup(EN_IR, GPIO.OUT)
 GPIO.setup(OUT_IR, GPIO.IN)
 print("IR Sensor Ready.....")
 print(" ")
