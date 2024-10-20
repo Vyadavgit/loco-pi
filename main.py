@@ -23,8 +23,9 @@ pwm2.start(0)
 
 # IR-08H Avoid Sensor (EN_IR, OUT_IR, PWR_IR, GND_IR)
 OUT_IR = 5
-# GPIO.setup(EN_IR, GPIO.OUT)
+EN_IR = 6
 GPIO.setup(OUT_IR, GPIO.IN)
+GPIO.setup(EN_IR, GPIO.OUT)
 print("IR Sensor Ready.....")
 print(" ")
 
@@ -32,6 +33,7 @@ print(" ")
 
 try: 
     while True:
+        GPIO.output(EN_IR, GPIO.HIGH)
         if(GPIO.input(OUT_IR)):
             print("Obstacle detected,",GPIO.input(OUT_IR))
         else:
