@@ -22,18 +22,19 @@ pwm2 = GPIO.PWM(Enb, 100)
 pwm2.start(0)
 
 # IR-08H Avoid Sensor (EN_IR, OUT_IR, PWR_IR, GND_IR)
-EN_IR, OUT_IR, PWR_IR, GND_IR = 5, 6, 13, 19
+EN_IR, OUT_IR, PWR_IR = 5, 6, 13
 GPIO.setup(EN_IR, GPIO.OUT)
 GPIO.setup(OUT_IR, GPIO.IN)
 GPIO.setup(PWR_IR, GPIO.OUT)
-GPIO.setup(GND_IR, GPIO.OUT)
+# GPIO.setup(GND_IR, GPIO.OUT)
 
 GPIO.output(EN_IR, GPIO.HIGH)
 GPIO.output(PWR_IR, GPIO.HIGH)
-GPIO.output(GND_IR, GPIO.LOW)
+# GPIO.output(GND_IR, GPIO.LOW)
 
 while True:
-    print(GPIO.input(OUT_IR))
+    # print("GND_IR:"+GPIO.output())
+    print("out_IR:"+GPIO.input(OUT_IR))
 # while GPIO.input(OUT_IR) != GPIO.HIGH:
 #     print(GPIO.input(OUT_IR))
 #     # Motor 1 forward
