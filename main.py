@@ -34,7 +34,7 @@ GPIO.output(PWR_IR, GPIO.HIGH)
 
 while True:
     # print("GND_IR:"+GPIO.output())
-    print("out_IR:"+GPIO.input(OUT_IR))
+    print("out_IR:",GPIO.input(OUT_IR))
 # while GPIO.input(OUT_IR) != GPIO.HIGH:
 #     print(GPIO.input(OUT_IR))
 #     # Motor 1 forward
