@@ -48,8 +48,8 @@ try:
     #     GPIO.output(In3, GPIO.HIGH)
     #     pwm2.ChangeDutyCycle(80)
 except KeyboardInterrupt:
-    print("cleaning up...")
-    GPIO.cleanup()
+    print("stopped")
+    # GPIO.cleanup()
 
 
     
