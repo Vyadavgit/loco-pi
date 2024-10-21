@@ -2,12 +2,12 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 # init configs
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 # IR-08H Avoid Sensor (EN_IR, OUT_IR, PWR_IR, GND_IR)
-OUT_IR = 33
-EN_IR = 18
+OUT_IR = 6
+EN_IR = 13
 GPIO.setup(OUT_IR, GPIO.IN)
 GPIO.setup(EN_IR, GPIO.OUT)
 print("IR Sensor Ready.....")
