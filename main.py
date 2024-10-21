@@ -3,7 +3,6 @@ from time import sleep
 
 # init configs
 GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
 
 # IR-08H Avoid Sensor (EN_IR, OUT_IR, PWR_IR, GND_IR)
 OUT_IR = 6
