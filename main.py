@@ -1,36 +1,28 @@
-from time import sleep
-
 import RPi.GPIO as GPIO
+import time
 
-# init configs
-GPIO.setmode(GPIO.BCM)
+sensor = 31
+buzzer = 18
 
-# IR-08H Avoid Sensor (EN_IR, OUT_IR, PWR_IR, GND_IR)
-OUT_IR = 6
-EN_IR = 13
-GPIO.setup(OUT_IR, GPIO.IN)
-GPIO.setup(EN_IR, GPIO.OUT)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(sensor,GPIO.IN)
+GPIO.setup(buzzer,GPIO.OUT)
 
-# # LED (GPIO_LED)
-# GPIO_LED = 12
-# GPIO.setup(GPIO_LED, GPIO.OUT)
-
+GPIO.output(buzzer,False)
 print("IR Sensor Ready.....")
 print(" ")
 
 try: 
-    while True:
-        if GPIO.input(OUT_IR):
-            print("Obstacle detected")
-            # GPIO.output(GPIO_LED, GPIO.HIGH)  # Turn on the LED
-        else:
-            print("Obstacle clear")
-            # GPIO.output(GPIO_LED, GPIO.LOW)  # Turn off the LED
-        sleep(0.2)  # Delay for stability
-except KeyboardInterrupt:
-    print("stopped")
-# finally:
-#     GPIO.cleanup()  # Clean up GPIO pins
+   while True:
+      if GPIO.input(sensor):
+          GPIO.output(buzzer,True)
+          print("Object Detected")
+          while GPIO.input(sensor):
+              time.sleep(0.2)
+      else:
+          GPIO.output(buzzer,False)
 
+except KeyboardInterrupt:
+    print("Stopped")
 
     
