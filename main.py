@@ -6,8 +6,8 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 
 # IR-08H Avoid Sensor (EN_IR, OUT_IR, PWR_IR, GND_IR)
-OUT_IR = 5
-EN_IR = 6
+OUT_IR = 29
+EN_IR = 31
 GPIO.setup(OUT_IR, GPIO.IN)
 GPIO.setup(EN_IR, GPIO.OUT)
 GPIO.output(EN_IR, GPIO.HIGH)
