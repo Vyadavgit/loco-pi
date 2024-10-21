@@ -8,6 +8,13 @@ GPIO.setup(buzzer,GPIO.OUT)
 
 GPIO.output(buzzer,False)
 print("Buzzer Ready.....")
-GPIO.output(buzzer,True)
-print("stopped")
+
+try:
+    while True:
+        print("buzzing...")
+        GPIO.output(buzzer,True)
+except KeyboardInterrupt:
+    print("stopping...")
+    GPIO.output(buzzer, False)
+    print("stopped")
     
