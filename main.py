@@ -1,29 +1,13 @@
 import RPi.GPIO as GPIO
 import time
 
-sensor = 16
-# buzzer = 18
+buzzer = 16
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(sensor,GPIO.IN)
-# GPIO.setup(buzzer,GPIO.OUT)
+GPIO.setup(buzzer,GPIO.OUT)
 
-# GPIO.output(buzzer,False)
-print("IR Sensor Ready.....")
-print(" ")
-
-try: 
-   while True:
-      if GPIO.input(sensor):
-        #   GPIO.output(buzzer,True)
-          print("Object Detected")
-          while GPIO.input(sensor):
-              time.sleep(0.2)
-      else:
-          print("Obstacle cleared")
-        #   GPIO.output(buzzer,False)
-
-except KeyboardInterrupt:
-    print("Stopped")
-
+GPIO.output(buzzer,False)
+print("Buzzer Ready.....")
+GPIO.output(buzzer,True)
+print("stopped")
     
