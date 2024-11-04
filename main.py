@@ -23,7 +23,8 @@ try:
         else:
             print("No IR signal detected")
         
-        # time.sleep(0.5)  # Wait for 500ms before the next transmission
+        GPIO.output(IR_transmitter, GPIO.LOW)
+        time.sleep(0.5)  # Wait for 500ms before the next transmission
 
 except KeyboardInterrupt:
     print("Stopping...")
