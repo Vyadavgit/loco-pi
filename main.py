@@ -1,5 +1,6 @@
-import RPi.GPIO as GPIO
 import time
+
+import RPi.GPIO as GPIO
 
 IR_transmitter = 24
 IR_receiver = 25
@@ -30,7 +31,7 @@ except KeyboardInterrupt:
     print("Stopping...")
 finally:
     GPIO.output(IR_transmitter, GPIO.LOW)
+    GPIO.cleanup(IR_receiver)
     GPIO.cleanup()
     print("GPIO cleaned up. Program stopped.")
     print()
-    
