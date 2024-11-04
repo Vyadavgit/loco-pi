@@ -1,10 +1,10 @@
 import RPi.GPIO as GPIO
 import time
 
-IR_receiver = 12
+IR_receiver = 25
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(IR_receiver, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(IR_receiver, GPIO.IN)  # No pull-up or pull-down specified
 
 print("Monitoring IR receiver on pin:", IR_receiver)
 
