@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-IR_receiver = 25
+IR_receiver = 12
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(IR_receiver, GPIO.IN)  # No pull-up or pull-down specified
