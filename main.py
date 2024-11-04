@@ -6,21 +6,28 @@ IR_receiver = 25
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(IR_transmitter, GPIO.OUT)
-GPIO.setup(IR_receiver, GPIO.IN)
+GPIO.setup(IR_receiver, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 GPIO.output(IR_transmitter, GPIO.LOW)
-print("IR initialisation.....",IR_transmitter)
+print("IR initialization complete. Transmitter on pin:", IR_transmitter)
 
 try:
     while True:
-        GPIO.output(IR_transmitter,GPIO.HIGH)
-        print("Emitting IR...",IR_transmitter)
-        if(GPIO.input(IR_receiver)):
-            print("Receiving IR...",IR_receiver)
+        GPIO.output(IR_transmitter, GPIO.HIGH)
+        print("Emitting IR signal...")
+        time.sleep(0.1)  # Transmit for 100ms
+        GPIO.output(IR_transmitter, GPIO.LOW)
+        
+        if GPIO.input(IR_receiver) == GPIO.HIGH:
+            print("IR signal received on pin:", IR_receiver)
+        else:
+            print("No IR signal detected")
+        
+        time.sleep(0.5)  # Wait for 500ms before the next transmission
+
 except KeyboardInterrupt:
-    print("stopping...")
+    print("Stopping...")
+finally:
     GPIO.output(IR_transmitter, GPIO.LOW)
-    print("Tramsmitting IR...",IR_transmitter)
-    print("Receiving IR...",IR_receiver)
-    print("stopped")
-    
+    GPIO.cleanup()
+    print("GPIO cleaned up. Program stopped.")
