@@ -31,4 +31,6 @@ except KeyboardInterrupt:
 finally:
     GPIO.output(IR_transmitter, GPIO.LOW)
     GPIO.cleanup()
-    print("GPIO cleaned up. Program stopped.\n")
+    print("GPIO cleaned up. Program stopped.")
+    print()
+    
