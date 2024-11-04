@@ -15,15 +15,15 @@ try:
     while True:
         GPIO.output(IR_transmitter, GPIO.HIGH)
         print("Emitting IR signal...")
-        time.sleep(0.1)  # Transmit for 100ms
-        GPIO.output(IR_transmitter, GPIO.LOW)
+        # time.sleep(0.1)  # Transmit for 100ms
+        # GPIO.output(IR_transmitter, GPIO.LOW)
         
         if GPIO.input(IR_receiver) == GPIO.HIGH:
             print("IR signal received on pin:", IR_receiver)
         else:
             print("No IR signal detected")
         
-        time.sleep(0.5)  # Wait for 500ms before the next transmission
+        # time.sleep(0.5)  # Wait for 500ms before the next transmission
 
 except KeyboardInterrupt:
     print("Stopping...")
