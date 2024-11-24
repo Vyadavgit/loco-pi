@@ -66,7 +66,7 @@ while True:
             if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
                 GPIO.output(buzzer, True)  # Buzz
                 init_buzz = False
-                time.sleep(1)  # Buzz for 1 second
+                sleep(1)  # Buzz for 1 second
                 GPIO.output(buzzer, False)  # Stop buzzing
             last_buzz_time = current_time  # Update last buzz time
             obstacle = True
@@ -111,7 +111,7 @@ while True:
     #     if not obstacle:
     #         continue
     #     else:
-    #         time.sleep(3)
+    #         sleep(3)
     #         recheck_obstacle()
 
     ret = obstacle_detected(last_buzz_time,init_buzz)
