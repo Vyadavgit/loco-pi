@@ -41,6 +41,8 @@ try:
             current_time = datetime.datetime.now()
             if (current_time - last_buzz_time).total_seconds() >= 60:
                 GPIO.output(buzzer, True)  # Buzz
+                time.sleep(1)  # Buzz for 1 second
+                GPIO.output(buzzer, False)  # Stop buzzing
                 last_buzz_time = current_time  # Update last buzz time
             
         time.sleep(0.1)
