@@ -12,7 +12,7 @@ try:
     while True:
         state = GPIO.input(IR_receiver)
         print("IR receiver state:", "HIGH" if state else "LOW")
-        time.sleep(0.1)
+        time.sleep(0.3)
 
 except KeyboardInterrupt:
     print("Stopping...")
