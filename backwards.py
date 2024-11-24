@@ -22,12 +22,12 @@ pwm2 = GPIO.PWM(Enb, 100)
 pwm2.start(0)
 
 while True:
-    # Motor 1 forward
-    GPIO.output(In1, GPIO.LOW)
-    GPIO.output(In2, GPIO.HIGH)
+    # Motor 1 backward
+    GPIO.output(In1, GPIO.HIGH)
+    GPIO.output(In2, GPIO.LOW)
     pwm1.ChangeDutyCycle(80)
 
-    # Motor 2 forward
-    GPIO.output(In4, GPIO.LOW)
-    GPIO.output(In3, GPIO.HIGH)
+    # Motor 2 backward
+    GPIO.output(In4, GPIO.HIGH)
+    GPIO.output(In3, GPIO.LOW)
     pwm2.ChangeDutyCycle(80)
