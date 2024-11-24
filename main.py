@@ -25,9 +25,9 @@ try:
         
         # Detect object based on receiver state
         if state:
-            print("Object detected: Yes")
+            print("Object detected: NO")
         else:
-            print("Object detected: No")
+            print("Object detected: YES")
         time.sleep(0.1)
 
 except KeyboardInterrupt:
