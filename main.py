@@ -114,7 +114,7 @@ while True:
     #         time.sleep(3)
     #         recheck_obstacle()
 
-    ret = obstacle_detected[last_buzz_time,init_buzz]
+    ret = obstacle_detected(last_buzz_time,init_buzz)
     last_buzz_time = ret[0]
     init_buzz = ret[1]
     move_forward() if not obstacle else stop()
