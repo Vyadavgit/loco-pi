@@ -46,7 +46,7 @@ while True:
     state = GPIO.input(IR_receiverPin)
     print("IR receiver state:", "HIGH" if state else "LOW")
 
-    def obstacle_detected(last_buzz_time, init_buzz):
+    def obstacle_detected(last_buzz_time, init_buzz, obstacle):
         # Control IR emitter based on receiver state
         if state:
             GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
@@ -70,7 +70,7 @@ while True:
                 GPIO.output(buzzer, False)  # Stop buzzing
             last_buzz_time = current_time  # Update last buzz time
             obstacle = True
-        return [last_buzz_time,init_buzz]
+        return [last_buzz_time,init_buzz,obstacle]
             
     def move_forward():
         # Motor 1 forward
@@ -114,9 +114,10 @@ while True:
     #         sleep(3)
     #         recheck_obstacle()
 
-    ret = obstacle_detected(last_buzz_time,init_buzz)
+    ret = obstacle_detected(last_buzz_time,init_buzz,obstacle)
     last_buzz_time = ret[0]
     init_buzz = ret[1]
+    obstacle = ret[2]
     move_forward() if not obstacle else stop()
     # move_backward()
 
