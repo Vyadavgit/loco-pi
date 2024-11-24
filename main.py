@@ -77,23 +77,23 @@ try:
             # Motor 1 forward
             GPIO.output(In1, GPIO.LOW)
             GPIO.output(In2, GPIO.HIGH)
-            pwm1.ChangeDutyCycle(50)
+            pwm1.ChangeDutyCycle(80)
 
             # Motor 2 forward
             GPIO.output(In4, GPIO.LOW)
             GPIO.output(In3, GPIO.HIGH)
-            pwm2.ChangeDutyCycle(50)
+            pwm2.ChangeDutyCycle(80)
 
         def move_backward():
             # Motor 1 backward
             GPIO.output(In1, GPIO.HIGH)
             GPIO.output(In2, GPIO.LOW)
-            pwm1.ChangeDutyCycle(50)
+            pwm1.ChangeDutyCycle(80)
 
             # Motor 2 backward
             GPIO.output(In4, GPIO.HIGH)
             GPIO.output(In3, GPIO.LOW)
-            pwm2.ChangeDutyCycle(50)
+            pwm2.ChangeDutyCycle(80)
         
         def stop():
             print("Stopping motors...")
@@ -119,7 +119,11 @@ try:
         last_buzz_time = ret[0]
         init_buzz = ret[1]
         obstacle = ret[2]
-        move_forward() if not obstacle else stop()
+        # move_forward() if not obstacle else stop()
+        if obstacle:
+            stop()
+        else:
+            move_forward()
         # move_backward()
         
 except KeyboardInterrupt:
