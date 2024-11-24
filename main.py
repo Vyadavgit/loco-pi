@@ -124,8 +124,8 @@ try:
         
 except KeyboardInterrupt:
     print("Stopping...")
-finally:
-    GPIO.cleanup()
-    print("GPIO cleaned up. Program stopped.")
+# finally:
+#     GPIO.cleanup()
+#     print("GPIO cleaned up. Program stopped.")
 
 
