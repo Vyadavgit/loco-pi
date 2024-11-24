@@ -41,6 +41,11 @@ print("Buzzer & IRs initialized.....")
 obstacle = False
 
 while True:
+    last_buzz_time = datetime.datetime.now()
+    init_buzz = True
+    state = GPIO.input(IR_receiverPin)
+    print("IR receiver state:", "HIGH" if state else "LOW")
+    
     def obstacle_detected():
         # Control IR emitter based on receiver state
         if state:
@@ -108,10 +113,6 @@ while True:
     #         time.sleep(3)
     #         recheck_obstacle()
 
-    last_buzz_time = datetime.datetime.now()
-    init_buzz = True
-    state = GPIO.input(IR_receiverPin)
-    print("IR receiver state:", "HIGH" if state else "LOW")
     obstacle_detected()
     move_forward() if not obstacle else stop()
     # move_backward()
