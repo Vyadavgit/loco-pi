@@ -38,9 +38,9 @@ try:
             print("Object detected: NO")
         else:
             print("Object detected: YES")
-            # Check if 30 sec has passed since last buzz
+            # Check if 10 sec has passed since last buzz
             current_time = datetime.datetime.now()
-            if (current_time - last_buzz_time).total_seconds() >= 30 or init_buzz:
+            if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
                 GPIO.output(buzzer, True)  # Buzz
                 init_buzz = False
                 time.sleep(1)  # Buzz for 1 second
