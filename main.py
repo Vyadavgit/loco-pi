@@ -44,7 +44,7 @@ try:
                 GPIO.output(buzzer, True)  # Buzz
                 init_buzz = False
                 # time.sleep(1)  # Buzz for 1 second
-                # GPIO.output(buzzer, False)  # Stop buzzing
+                GPIO.output(buzzer, False)  # Stop buzzing
                 last_buzz_time = current_time  # Update last buzz time
         time.sleep(0.1)
 
