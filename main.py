@@ -42,85 +42,90 @@ obstacle = False
 last_buzz_time = datetime.datetime.now()
 init_buzz = True
 
-while True:
-    state = GPIO.input(IR_receiverPin)
-    print("IR receiver state:", "HIGH" if state else "LOW")
+try:
+    while True:
+        state = GPIO.input(IR_receiverPin)
+        print("IR receiver state:", "HIGH" if state else "LOW")
 
-    def obstacle_detected(last_buzz_time, init_buzz, obstacle):
-        # Control IR emitter based on receiver state
-        if state:
-            GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
-            print("IR emitter state: ON")
-        else:
-            GPIO.output(IR_emitterPin, GPIO.LOW)  # Turn off IR emitter
-            print("IR emitter state: OFF")
-            
-        # Detect object based on receiver state
-        if state:
-            print("Object detected: NO")
-            # obstacle = False
-        else:
-            print("Object detected: YES")
-            # Check if 10 sec has passed since last buzz
-            current_time = datetime.datetime.now()
-            if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
-                GPIO.output(buzzer, True)  # Buzz
-                init_buzz = False
-                sleep(.5)  # Buzz for .5 second
-                GPIO.output(buzzer, False)  # Stop buzzing
-            last_buzz_time = current_time  # Update last buzz time
-            obstacle = True
-        return [last_buzz_time,init_buzz,obstacle]
-            
-    def move_forward():
-        # Motor 1 forward
-        GPIO.output(In1, GPIO.LOW)
-        GPIO.output(In2, GPIO.HIGH)
-        pwm1.ChangeDutyCycle(50)
+        def obstacle_detected(last_buzz_time, init_buzz, obstacle):
+            # Control IR emitter based on receiver state
+            if state:
+                GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
+                print("IR emitter state: ON")
+            else:
+                GPIO.output(IR_emitterPin, GPIO.LOW)  # Turn off IR emitter
+                print("IR emitter state: OFF")
+                
+            # Detect object based on receiver state
+            if state:
+                print("Object detected: NO")
+                # obstacle = False
+            else:
+                print("Object detected: YES")
+                # Check if 10 sec has passed since last buzz
+                current_time = datetime.datetime.now()
+                if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
+                    GPIO.output(buzzer, True)  # Buzz
+                    init_buzz = False
+                    sleep(.5)  # Buzz for .5 second
+                    GPIO.output(buzzer, False)  # Stop buzzing
+                last_buzz_time = current_time  # Update last buzz time
+                obstacle = True
+            return [last_buzz_time,init_buzz,obstacle]
+                
+        def move_forward():
+            # Motor 1 forward
+            GPIO.output(In1, GPIO.LOW)
+            GPIO.output(In2, GPIO.HIGH)
+            pwm1.ChangeDutyCycle(50)
 
-        # Motor 2 forward
-        GPIO.output(In4, GPIO.LOW)
-        GPIO.output(In3, GPIO.HIGH)
-        pwm2.ChangeDutyCycle(50)
+            # Motor 2 forward
+            GPIO.output(In4, GPIO.LOW)
+            GPIO.output(In3, GPIO.HIGH)
+            pwm2.ChangeDutyCycle(50)
 
-    def move_backward():
-        # Motor 1 backward
-        GPIO.output(In1, GPIO.HIGH)
-        GPIO.output(In2, GPIO.LOW)
-        pwm1.ChangeDutyCycle(50)
+        def move_backward():
+            # Motor 1 backward
+            GPIO.output(In1, GPIO.HIGH)
+            GPIO.output(In2, GPIO.LOW)
+            pwm1.ChangeDutyCycle(50)
 
-        # Motor 2 backward
-        GPIO.output(In4, GPIO.HIGH)
-        GPIO.output(In3, GPIO.LOW)
-        pwm2.ChangeDutyCycle(50)
-    
-    def stop():
-        print("Stopping motors...")
-        # Stop both motors
-        GPIO.output(In1, GPIO.LOW)
-        GPIO.output(In2, GPIO.LOW)
-        pwm1.ChangeDutyCycle(0)
-        GPIO.output(In3, GPIO.LOW)
-        GPIO.output(In4, GPIO.LOW)
-        pwm2.ChangeDutyCycle(0)
-        print("Stopped.")
-    
-    # def recheck_obstacle():
-    #     obstacle = False
-    #     obstacle_detected()
-    #     if not obstacle:
-    #         continue
-    #     else:
-    #         sleep(3)
-    #         recheck_obstacle()
+            # Motor 2 backward
+            GPIO.output(In4, GPIO.HIGH)
+            GPIO.output(In3, GPIO.LOW)
+            pwm2.ChangeDutyCycle(50)
+        
+        def stop():
+            print("Stopping motors...")
+            # Stop both motors
+            GPIO.output(In1, GPIO.LOW)
+            GPIO.output(In2, GPIO.LOW)
+            pwm1.ChangeDutyCycle(0)
+            GPIO.output(In3, GPIO.LOW)
+            GPIO.output(In4, GPIO.LOW)
+            pwm2.ChangeDutyCycle(0)
+            print("Stopped.")
+        
+        # def recheck_obstacle():
+        #     obstacle = False
+        #     obstacle_detected()
+        #     if not obstacle:
+        #         continue
+        #     else:
+        #         sleep(3)
+        #         recheck_obstacle()
 
-    ret = obstacle_detected(last_buzz_time,init_buzz,obstacle)
-    last_buzz_time = ret[0]
-    init_buzz = ret[1]
-    obstacle = ret[2]
-    move_forward() if not obstacle else stop()
-    # move_backward()
-
-
+        ret = obstacle_detected(last_buzz_time,init_buzz,obstacle)
+        last_buzz_time = ret[0]
+        init_buzz = ret[1]
+        obstacle = ret[2]
+        move_forward() if not obstacle else stop()
+        # move_backward()
+        
+except KeyboardInterrupt:
+    print("Stopping...")
+finally:
+    GPIO.cleanup()
+    print("GPIO cleaned up. Program stopped.")
 
 
