@@ -19,8 +19,9 @@ print("IR receiver state: ",GPIO.input(IR_receiverPin))
 print("Buzzer & IRs initialized.....")
 
 try:
+    last_buzz_time = datetime.datetime.now()
+    init_buzz = True
     while True:
-        last_buzz_time = datetime.datetime.now()
         state = GPIO.input(IR_receiverPin)
         print("IR receiver state:", "HIGH" if state else "LOW")
         
@@ -37,14 +38,14 @@ try:
             print("Object detected: NO")
         else:
             print("Object detected: YES")
-            # Check if a minute has passed since last buzz
+            # Check if 30 sec has passed since last buzz
             current_time = datetime.datetime.now()
-            if (current_time - last_buzz_time).total_seconds() >= 60:
+            if (current_time - last_buzz_time).total_seconds() >= 30 or init_buzz:
                 GPIO.output(buzzer, True)  # Buzz
-                time.sleep(1)  # Buzz for 1 second
-                GPIO.output(buzzer, False)  # Stop buzzing
+                init_buzz = False
+                # time.sleep(1)  # Buzz for 1 second
+                # GPIO.output(buzzer, False)  # Stop buzzing
                 last_buzz_time = current_time  # Update last buzz time
-            
         time.sleep(0.1)
 
 except KeyboardInterrupt:
