@@ -1,17 +1,26 @@
 import RPi.GPIO as GPIO
 import time
+import datetime
 
+# assign GPIO pins
 IR_emitterPin = 24
 IR_receiverPin = 25
+buzzer = 23
 
+# setup
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(IR_emitterPin, GPIO.OUT)  # Set IR emitter pin as output
 GPIO.setup(IR_receiverPin, GPIO.IN)  # No pull-up or pull-down specified
+GPIO.setup(buzzer,GPIO.OUT) # set up buzzer
 
-print("Monitoring IR receiver on pin:", IR_receiverPin)
+# initialize
+GPIO.output(buzzer,False)
+print("IR receiver state: ",GPIO.input(IR_receiverPin))
+print("Buzzer & IRs initialized.....")
 
 try:
     while True:
+        last_buzz_time = datetime.datetime.now()
         state = GPIO.input(IR_receiverPin)
         print("IR receiver state:", "HIGH" if state else "LOW")
         
@@ -28,6 +37,12 @@ try:
             print("Object detected: NO")
         else:
             print("Object detected: YES")
+            # Check if a minute has passed since last buzz
+            current_time = datetime.datetime.now()
+            if (current_time - last_buzz_time).total_seconds() >= 60:
+                GPIO.output(buzzer, True)  # Buzz
+                last_buzz_time = current_time  # Update last buzz time
+            
         time.sleep(0.1)
 
 except KeyboardInterrupt:
