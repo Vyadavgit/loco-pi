@@ -66,7 +66,7 @@ while True:
             if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
                 GPIO.output(buzzer, True)  # Buzz
                 init_buzz = False
-                sleep(1)  # Buzz for 1 second
+                sleep(.5)  # Buzz for .5 second
                 GPIO.output(buzzer, False)  # Stop buzzing
             last_buzz_time = current_time  # Update last buzz time
             obstacle = True
@@ -76,23 +76,23 @@ while True:
         # Motor 1 forward
         GPIO.output(In1, GPIO.LOW)
         GPIO.output(In2, GPIO.HIGH)
-        pwm1.ChangeDutyCycle(80)
+        pwm1.ChangeDutyCycle(50)
 
         # Motor 2 forward
         GPIO.output(In4, GPIO.LOW)
         GPIO.output(In3, GPIO.HIGH)
-        pwm2.ChangeDutyCycle(80)
+        pwm2.ChangeDutyCycle(50)
 
     def move_backward():
         # Motor 1 backward
         GPIO.output(In1, GPIO.HIGH)
         GPIO.output(In2, GPIO.LOW)
-        pwm1.ChangeDutyCycle(80)
+        pwm1.ChangeDutyCycle(50)
 
         # Motor 2 backward
         GPIO.output(In4, GPIO.HIGH)
         GPIO.output(In3, GPIO.LOW)
-        pwm2.ChangeDutyCycle(80)
+        pwm2.ChangeDutyCycle(50)
     
     def stop():
         print("Stopping motors...")
