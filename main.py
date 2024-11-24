@@ -43,7 +43,7 @@ try:
             if (current_time - last_buzz_time).total_seconds() >= 30 or init_buzz:
                 GPIO.output(buzzer, True)  # Buzz
                 init_buzz = False
-                # time.sleep(1)  # Buzz for 1 second
+                time.sleep(1)  # Buzz for 1 second
                 GPIO.output(buzzer, False)  # Stop buzzing
                 last_buzz_time = current_time  # Update last buzz time
         time.sleep(0.1)
