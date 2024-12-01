@@ -60,7 +60,7 @@ def obstacle_detected():
         if not obstacle_detected_in_last_five_checks():
             obstacle = False
     else:
-        print("Object detected: YES" + ", timestamp: "+ datetime.now().ctime)
+        print("Object detected: YES" + ", timestamp: "+ str(datetime.now().ctime))
         # Check if 10 sec has passed since last buzz
         current_time = datetime.now()
         if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
@@ -79,7 +79,7 @@ def obstacle_detected_in_last_five_checks():
     margin_seconds = 5
     if ((datetime.now() - last_checked_interval).total_seconds() >= 10) and not ((datetime.now() - last_buzz_time).total_seconds() > 50+margin_seconds):
         no_of_times_obstacle_not_detected += 1
-        print("No. of times obstacle detected: "+no_of_times_obstacle_not_detected + " timestamp: "+ last_checked_interval.ctime)
+        print("No. of times obstacle detected: "+str(no_of_times_obstacle_not_detected) + " timestamp: "+ str(last_checked_interval.ctime))
         last_checked_interval = datetime.now()
         return True
     else:
