@@ -60,7 +60,7 @@ def obstacle_detected():
         if not obstacle_detected_in_last_five_checks():
             obstacle = False
     else:
-        print("Object detected: YES" + ", timestamp: "+ str(datetime.now().ctime))
+        print("Object detected: YES" + ", timestamp: ", datetime.now().ctime)
         # Check if 10 sec has passed since last buzz
         current_time = datetime.now()
         if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
@@ -127,6 +127,7 @@ try:
         state = GPIO.input(IR_receiverPin)
         print("IR receiver state:", "HIGH" if state else "LOW")
         obstacle_detected()
+        print("try-catch: obstacle: ",obstacle," no_of_times_obstacle_not_detected: ",no_of_times_obstacle_not_detected, " running: ",running)
         if obstacle and no_of_times_obstacle_not_detected < 5 and running:
             print("Stopping############################################")
             # stop()
