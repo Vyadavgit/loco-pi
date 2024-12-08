@@ -71,7 +71,7 @@ def obstacle_detected_during_stop():
     loop_count = 0
     obstacle_detected_count = 0
     while (datetime.now() - init_timestamp).total_seconds() < 10:
-        sleep(.5)
+        # sleep(.5)
         if(obstacle_detected()):
             obstacle_detected_count += 1
         loop_count += 1
@@ -85,23 +85,23 @@ def move_forward():
     # Motor 1 forward
     GPIO.output(In1, GPIO.LOW)
     GPIO.output(In2, GPIO.HIGH)
-    pwm1.ChangeDutyCycle(80)
+    pwm1.ChangeDutyCycle(60)
 
     # Motor 2 forward
     GPIO.output(In4, GPIO.LOW)
     GPIO.output(In3, GPIO.HIGH)
-    pwm2.ChangeDutyCycle(80)
+    pwm2.ChangeDutyCycle(60)
 
 def move_backward():
     # Motor 1 backward
     GPIO.output(In1, GPIO.HIGH)
     GPIO.output(In2, GPIO.LOW)
-    pwm1.ChangeDutyCycle(80)
+    pwm1.ChangeDutyCycle(60)
 
     # Motor 2 backward
     GPIO.output(In4, GPIO.HIGH)
     GPIO.output(In3, GPIO.LOW)
-    pwm2.ChangeDutyCycle(80)
+    pwm2.ChangeDutyCycle(60)
 
 def stop():
     print("Stopping motors...")
