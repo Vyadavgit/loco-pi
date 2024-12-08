@@ -72,7 +72,7 @@ def obstacle_detected_during_stop():
         if(obstacle_detected()):
             obstacle_detected_count += 1
         loop_count += 1
-        print('Detection ratio: '+obstacle_detected_count+'/'+loop_count)
+        print('Detection ratio: ',obstacle_detected_count,'/',loop_count)
         print('Detection %: ',detection_graph(obstacle_detected_count,loop_count))
     print("Obj detected %: ",(obstacle_detected_count/loop_count)*100)
     detection_flag = (obstacle_detected_count/loop_count)*100 > .50
