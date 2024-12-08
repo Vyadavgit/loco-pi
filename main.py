@@ -119,27 +119,29 @@ def stop():
     pwm2.ChangeDutyCycle(0)
     print("Stopped.")
 
-
 running = False   
-try:
-    while True:
-        sleep(2)
-        state = GPIO.input(IR_receiverPin)
-        print("IR receiver state:", "HIGH" if state else "LOW")
-        obstacle_detected()
-        print("try-catch: obstacle: ",obstacle," no_of_times_obstacle_not_detected: ",no_of_times_obstacle_not_detected, " running: ",running)
-        if obstacle and no_of_times_obstacle_not_detected < 5 and running:
-            print("Stopping############################################")
-            # stop()
-            running = False
-        else:
-            running = True
-            print("Running.............................................")
-            # move_forward()
-except KeyboardInterrupt:
-    print("Stopping...")
-# finally:
-#     GPIO.cleanup()
-#     print("GPIO cleaned up. Program stopped.")
+def main():
+    global running, obstacle, no_of_times_obstacle_not_detected
+    try:
+        while True:
+            sleep(2)
+            state = GPIO.input(IR_receiverPin)
+            print("\nIR receiver state:", "HIGH" if state else "LOW")
+            obstacle_detected()
+            print("try-catch: obstacle: ",obstacle," no_of_times_obstacle_not_detected: ",no_of_times_obstacle_not_detected, " running: ",running)
+            if obstacle and no_of_times_obstacle_not_detected < 5 and running:
+                print("Stopping############################################")
+                # stop()
+                running = False
+            else:
+                running = True
+                print("Running.............................................")
+                # move_forward()
+    except KeyboardInterrupt:
+        print("Stopping...")
+    # finally:
+    #     GPIO.cleanup()
+    #     print("GPIO cleaned up. Program stopped.")
 
-
+    if __name__ == "__main__":
+        main()
