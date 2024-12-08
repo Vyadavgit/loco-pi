@@ -46,11 +46,16 @@ def buzz():
 
 def obstacle_detected():
     obstacle = False
-    state = GPIO.input(IR_receiverPin)
+    states = []
+    for i in range(10):
+        GPIO.output(IR_emitterPin, GPIO.HIGH)
+        state = GPIO.input(IR_receiverPin)
+        states.append(state)
+    state = min(states)
     print('\n')
     print('IR receiver state:', "HIGH" if state else "LOW")
     if state: # if state is HIGH means, there is no obstacle. Continue emitting IR signals
-        GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
+        # GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
         # print("IR emitter state: ON")
         obstacle = False
     else: # if the state fluctuated, stop emitting
