@@ -79,7 +79,7 @@ def obstacle_detected_in_last_five_checks():
     margin_seconds = 5
     if ((datetime.now() - last_checked_interval).total_seconds() >= 10) and not ((datetime.now() - last_buzz_time).total_seconds() > 50+margin_seconds):
         no_of_times_obstacle_not_detected += 1
-        print("No. of times obstacle detected: "+str(no_of_times_obstacle_not_detected) + " timestamp: "+ str(last_checked_interval.ctime))
+        print("No. of times obstacle not detected: "+str(no_of_times_obstacle_not_detected) + " timestamp: "+ str(last_checked_interval.ctime))
         last_checked_interval = datetime.now()
         return True
     else:
@@ -127,11 +127,13 @@ try:
         print("IR receiver state:", "HIGH" if state else "LOW")
         obstacle_detected()
         if obstacle and no_of_times_obstacle_not_detected < 5 and running:
-            stop()
+            print("Stopping.............................................")
+            # stop()
             running = False
         else:
             running = True
-            move_forward()
+            print("Running.............................................")
+            # move_forward()
 except KeyboardInterrupt:
     print("Stopping...")
 # finally:
