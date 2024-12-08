@@ -117,7 +117,7 @@ def stop():
 def main():
     try:
         while True:
-            sleep(1)
+            sleep(3)
             if not obstacle_detected():
                 move_forward()
                 print("Running.............................................")
