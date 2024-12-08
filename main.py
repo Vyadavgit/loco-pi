@@ -47,7 +47,7 @@ def buzz():
 def obstacle_detected():
     obstacle = False
     states = []
-    for i in range(5):
+    for i in range(2):
         GPIO.output(IR_emitterPin, GPIO.HIGH)
         state = GPIO.input(IR_receiverPin)
         states.append(state)
@@ -119,7 +119,7 @@ def main():
     try:
         while True:
             if not obstacle_detected():
-                # move_forward()
+                move_forward()
                 print("Running.............................................")
             else:
                 stop()
