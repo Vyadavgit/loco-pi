@@ -65,6 +65,9 @@ def obstacle_detected():
         buzz()
     return obstacle
 
+def detection_graph(detection_count, loop_count):
+    return (detection_count/loop_count)*100
+
 def obstacle_detected_during_stop():
     # global state, obstacle
     init_timestamp = datetime.now()
@@ -75,7 +78,8 @@ def obstacle_detected_during_stop():
         if(obstacle_detected()):
             obstacle_detected_count += 1
         loop_count += 1
-    print("obj detected %: ",(obstacle_detected_count/loop_count)*100)
+        print('Detection %: ',detection_graph(obstacle_detected_count,loop_count))
+    print("Obj detected %: ",(obstacle_detected_count/loop_count)*100)
     detection_flag = (obstacle_detected_count/loop_count)*100 > .50
     if detection_flag:
         buzz()
