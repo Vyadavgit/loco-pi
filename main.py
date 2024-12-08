@@ -143,5 +143,5 @@ def main():
     #     GPIO.cleanup()
     #     print("GPIO cleaned up. Program stopped.")
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
