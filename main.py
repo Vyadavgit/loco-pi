@@ -72,9 +72,9 @@ def obstacle_detected_during_stop():
         if(obstacle_detected()):
             obstacle_detected_count += 1
         loop_count += 1
-        print('Detection ratio: ',obstacle_detected_count,'/',loop_count)
-        print('Detection %: ',detection_graph(obstacle_detected_count,loop_count))
-    print("Obj detected %: ",(obstacle_detected_count/loop_count)*100)
+        print('Detection ratio: '+str(obstacle_detected_count)+'/'+str(loop_count))
+        print('Detection %: '+str(detection_graph(obstacle_detected_count,loop_count))+'%')
+    print("Obj detected %: "+str((obstacle_detected_count/loop_count)*100)+'%')
     detection_flag = (obstacle_detected_count/loop_count)*100 > .50
     if detection_flag:
         buzz()
