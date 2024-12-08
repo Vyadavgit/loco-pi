@@ -123,6 +123,7 @@ def stop():
 running = False   
 try:
     while True:
+        sleep(2)
         state = GPIO.input(IR_receiverPin)
         print("IR receiver state:", "HIGH" if state else "LOW")
         obstacle_detected()
