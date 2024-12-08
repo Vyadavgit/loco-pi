@@ -57,7 +57,7 @@ def obstacle_detected():
     # Detect object based on receiver state
     if state:
         print("Object detected: NO")
-        if not obstacle_detected_in_last_five_checks():
+        if obstacle and not obstacle_detected_in_last_five_checks():
             obstacle = False
     else:
         print("Object detected: YES" + ", timestamp: ", datetime.now().ctime)
@@ -126,7 +126,7 @@ def main():
         while True:
             sleep(2)
             state = GPIO.input(IR_receiverPin)
-            print("\nIR receiver state:", "HIGH" if state else "LOW")
+            print('\n'+'IR receiver state:', "HIGH" if state else "LOW")
             obstacle_detected()
             print("try-catch: obstacle: ",obstacle," no_of_times_obstacle_not_detected: ",no_of_times_obstacle_not_detected, " running: ",running)
             if obstacle and no_of_times_obstacle_not_detected < 5 and running:
