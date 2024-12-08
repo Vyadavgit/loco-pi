@@ -127,7 +127,7 @@ try:
         print("IR receiver state:", "HIGH" if state else "LOW")
         obstacle_detected()
         if obstacle and no_of_times_obstacle_not_detected < 5 and running:
-            print("Stopping.............................................")
+            print("Stopping############################################")
             # stop()
             running = False
         else:
