@@ -70,7 +70,7 @@ def obstacle_detected_during_stop():
             obstacle_detected_count += 1
         loop_count += 1
         print('Detection ratio: '+str(obstacle_detected_count)+'/'+str(loop_count))
-    detection_flag = obstacle_detected_count > 1 # if obstacle detected more than 1 time in last 10secs
+    detection_flag = obstacle_detected_count > 0 # if obstacle detected more than 1 time in last 10secs
     if detection_flag:
         buzz()
     return detection_flag
