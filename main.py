@@ -41,7 +41,7 @@ print("Buzzer & IRs initialized.....")
 
 def buzz():
     GPIO.output(buzzer, True)  # Buzz
-    sleep(.5)  # Buzz for .5 second
+    sleep(.2)  # Buzz for .5 second
     GPIO.output(buzzer, False)  # Stop buzzing
 
 def obstacle_detected():
@@ -82,15 +82,15 @@ def obstacle_detected_during_stop():
     return detection_flag
     
 def move_forward():
-    # # Motor 1 forward
-    # GPIO.output(In1, GPIO.LOW)
-    # GPIO.output(In2, GPIO.HIGH)
-    # pwm1.ChangeDutyCycle(60)
+    # Motor 1 forward
+    GPIO.output(In1, GPIO.LOW)
+    GPIO.output(In2, GPIO.HIGH)
+    pwm1.ChangeDutyCycle(60)
 
-    # # Motor 2 forward
-    # GPIO.output(In4, GPIO.LOW)
-    # GPIO.output(In3, GPIO.HIGH)
-    # pwm2.ChangeDutyCycle(60)
+    # Motor 2 forward
+    GPIO.output(In4, GPIO.LOW)
+    GPIO.output(In3, GPIO.HIGH)
+    pwm2.ChangeDutyCycle(60)
     sleep(.1)
 
 def move_backward():
