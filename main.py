@@ -119,10 +119,10 @@ def main():
     try:
         while True:
             if not obstacle_detected():
-                # move_forward()
+                move_forward()
                 print("Running.............................................")
             else:
-                # stop()
+                stop()
                 print("!!...Stoped. Obstacle avoidance activated...!!")
                 while obstacle_detected_during_stop():
                     print('\nOBSTACLE DETECTED. Rescan for next 10 seconds...')
