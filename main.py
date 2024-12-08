@@ -125,7 +125,7 @@ def main():
                 # stop()
                 print("***********Stoped. Obstacle avoidance activated***********")
                 while obstacle_detected_during_stop():
-                    print("Obstacle detected.")
+                    print('\nOBSTACLE DETECTED. Rescan for next 10 seconds...')
     except KeyboardInterrupt:
         print("Stopping...")
     # finally:
