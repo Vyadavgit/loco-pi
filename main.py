@@ -45,7 +45,7 @@ last_checked_interval = last_buzz_time
 no_of_times_obstacle_not_detected = 0
 
 def obstacle_detected():
-    global last_buzz_time, init_buzz, obstacle, no_of_times_obstacle_not_detected, last_checked_interval
+    global last_buzz_time, init_buzz, obstacle, no_of_times_obstacle_not_detected, last_checked_interval, state
     # Control IR emitter based on receiver state
     if state:
         GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
@@ -121,7 +121,7 @@ def stop():
 
 running = False   
 def main():
-    global running, obstacle, no_of_times_obstacle_not_detected
+    global running, obstacle, no_of_times_obstacle_not_detected, state
     try:
         while True:
             sleep(2)
