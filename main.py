@@ -38,53 +38,90 @@ GPIO.setup(buzzer,GPIO.OUT) # set up buzzer
 GPIO.output(buzzer,False)
 print("IR receiver state: ",GPIO.input(IR_receiverPin))
 print("Buzzer & IRs initialized.....")
-obstacle = False
-last_buzz_time = datetime.now()
-init_buzz = True
-last_checked_interval = last_buzz_time
-no_of_times_obstacle_not_detected = 0
+# obstacle = False
+# last_buzz_time = datetime.now()
+# init_buzz = True
+# last_checked_interval = last_buzz_time
+# no_of_times_obstacle_not_detected = 0
+
+def buzz():
+    GPIO.output(buzzer, True)  # Buzz
+    sleep(.5)  # Buzz for .5 second
+    GPIO.output(buzzer, False)  # Stop buzzing
 
 def obstacle_detected():
-    global last_buzz_time, init_buzz, obstacle, no_of_times_obstacle_not_detected, last_checked_interval, state
-    # Control IR emitter based on receiver state
-    if state:
+    obstacle = False
+    state = GPIO.input(IR_receiverPin)
+    print()
+    print('IR receiver state:', "HIGH" if state else "LOW")
+    if state: # if state is HIGH means, there is no obstacle. Continue emitting IR signals
         GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
         print("IR emitter state: ON")
-    else:
+        obstacle = False
+    else: # if the state fluctuated, stop emitting
         GPIO.output(IR_emitterPin, GPIO.LOW)  # Turn off IR emitter
         print("IR emitter state: OFF")
-        
-    # Detect object based on receiver state
-    if state:
-        print("Object detected: NO")
-        if obstacle and not obstacle_detected_in_last_five_checks():
-            obstacle = False
-    else:
-        print("Object detected: YES" + ", timestamp: ", datetime.now().ctime)
-        # Check if 10 sec has passed since last buzz
-        current_time = datetime.now()
-        if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
-            GPIO.output(buzzer, True)  # Buzz
-            init_buzz = False
-            sleep(.5)  # Buzz for .5 second
-            GPIO.output(buzzer, False)  # Stop buzzing
-        last_buzz_time = current_time  # Update last buzz time
         obstacle = True
-        no_of_times_obstacle_not_detected = 0
-        last_checked_interval = last_buzz_time
+        buzz()
     return obstacle
 
-def obstacle_detected_in_last_five_checks():
-    global no_of_times_obstacle_not_detected, last_checked_interval
-    margin_seconds = 5
-    if ((datetime.now() - last_checked_interval).total_seconds() >= 10) and not ((datetime.now() - last_buzz_time).total_seconds() > 50+margin_seconds):
-        no_of_times_obstacle_not_detected += 1
-        print("No. of times obstacle not detected: "+str(no_of_times_obstacle_not_detected) + " timestamp: "+ str(last_checked_interval.ctime))
-        last_checked_interval = datetime.now()
-        return True
-    else:
-        print("Obstacle not detected for last five checks")
-        return False
+def obstacle_detected_during_stop():
+    # global state, obstacle
+    init_timestamp = datetime.now()
+    loop_count = 0
+    obstacle_detected_count = 0
+    while (datetime.now() - init_timestamp).total_seconds() < 10:
+        sleep(.5)
+        if(obstacle_detected()):
+            obstacle_detected_count += 1
+        loop_count += 1
+    print("obj detected %: ",(obstacle_detected_count/loop_count)*100)
+    detection_flag = (obstacle_detected_count/loop_count)*100 > .50
+    if detection_flag:
+        buzz()
+    return detection_flag
+
+# def obstacle_detected():
+#     global last_buzz_time, init_buzz, obstacle, no_of_times_obstacle_not_detected, last_checked_interval, state
+#     # Control IR emitter based on receiver state
+#     if state:
+#         GPIO.output(IR_emitterPin, GPIO.HIGH)  # Turn on IR emitter
+#         print("IR emitter state: ON")
+#     else:
+#         GPIO.output(IR_emitterPin, GPIO.LOW)  # Turn off IR emitter
+#         print("IR emitter state: OFF")
+        
+#     # Detect object based on receiver state
+#     if state:
+#         print("Object detected: NO")
+#         if obstacle and not obstacle_detected_in_last_five_checks():
+#             obstacle = False
+#     else:
+#         print("Object detected: YES" + ", timestamp: ", datetime.now().ctime)
+#         # Check if 10 sec has passed since last buzz
+#         current_time = datetime.now()
+#         if (current_time - last_buzz_time).total_seconds() >= 10 or init_buzz:
+#             GPIO.output(buzzer, True)  # Buzz
+#             init_buzz = False
+#             sleep(.5)  # Buzz for .5 second
+#             GPIO.output(buzzer, False)  # Stop buzzing
+#         last_buzz_time = current_time  # Update last buzz time
+#         obstacle = True
+#         no_of_times_obstacle_not_detected = 0
+#         last_checked_interval = last_buzz_time
+#     return obstacle
+
+# def obstacle_detected_in_last_five_checks():
+#     global no_of_times_obstacle_not_detected, last_checked_interval
+#     margin_seconds = 5
+#     if ((datetime.now() - last_checked_interval).total_seconds() >= 10) and not ((datetime.now() - last_buzz_time).total_seconds() > 50+margin_seconds):
+#         no_of_times_obstacle_not_detected += 1
+#         print("No. of times obstacle not detected: "+str(no_of_times_obstacle_not_detected) + " timestamp: "+ str(last_checked_interval.ctime))
+#         last_checked_interval = datetime.now()
+#         return True
+#     else:
+#         print("Obstacle not detected for last five checks")
+#         return False
     
 def move_forward():
     # Motor 1 forward
@@ -119,24 +156,18 @@ def stop():
     pwm2.ChangeDutyCycle(0)
     print("Stopped.")
 
-running = False   
 def main():
-    global running, obstacle, no_of_times_obstacle_not_detected, state
     try:
         while True:
             sleep(2)
-            state = GPIO.input(IR_receiverPin)
-            print('\n'+'IR receiver state:', "HIGH" if state else "LOW")
-            obstacle_detected()
-            print("try-catch: obstacle: ",obstacle," no_of_times_obstacle_not_detected: ",no_of_times_obstacle_not_detected, " running: ",running)
-            if obstacle and no_of_times_obstacle_not_detected < 5 and running:
-                print("Stopping############################################")
-                # stop()
-                running = False
-            else:
-                running = True
-                print("Running.............................................")
+            if not obstacle_detected():
                 # move_forward()
+                print("Running.............................................")
+            else:
+                # stop()
+                print("***********Stoped. Obstacle avoidance activated***********")
+                while obstacle_detected_during_stop():
+                    print("Obstacle detected.")
     except KeyboardInterrupt:
         print("Stopping...")
     # finally:
