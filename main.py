@@ -85,24 +85,24 @@ def move_forward():
     # Motor 1 forward
     GPIO.output(In1, GPIO.LOW)
     GPIO.output(In2, GPIO.HIGH)
-    pwm1.ChangeDutyCycle(60)
+    pwm1.ChangeDutyCycle(70)
 
     # Motor 2 forward
     GPIO.output(In4, GPIO.LOW)
     GPIO.output(In3, GPIO.HIGH)
-    pwm2.ChangeDutyCycle(60)
+    pwm2.ChangeDutyCycle(70)
     sleep(.1)
 
 def move_backward():
     # Motor 1 backward
     GPIO.output(In1, GPIO.HIGH)
     GPIO.output(In2, GPIO.LOW)
-    pwm1.ChangeDutyCycle(60)
+    pwm1.ChangeDutyCycle(70)
 
     # Motor 2 backward
     GPIO.output(In4, GPIO.HIGH)
     GPIO.output(In3, GPIO.LOW)
-    pwm2.ChangeDutyCycle(60)
+    pwm2.ChangeDutyCycle(70)
 
 def stop():
     print("Stopping motors...")
