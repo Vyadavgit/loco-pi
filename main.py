@@ -188,7 +188,8 @@ def turn(angle):
         return
 
 def main():
-    current_angle = 0  # Initialize the angle to 0
+    global current_angle
+    current_angle = 0
     try:
         while True:
             if not obstacle_detected():
