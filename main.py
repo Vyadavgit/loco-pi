@@ -119,7 +119,7 @@ def main():
     try:
         while True:
             if not obstacle_detected():
-                # move_forward()
+                move_forward()
                 print("Running.............................................")
             else:
                 stop()
