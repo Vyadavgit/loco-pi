@@ -123,7 +123,7 @@ def main():
                 print("Running.............................................")
             else:
                 stop()
-                print("!!...Stoped. Obstacle avoidance activated...!!")
+                print("!!...Stopped. Obstacle avoidance activated...!!")
                 while obstacle_detected_during_stop():
                     print('\nOBSTACLE DETECTED. Rescan for next 10 seconds...')
     except KeyboardInterrupt:
