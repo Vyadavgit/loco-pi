@@ -160,6 +160,11 @@ def turn_right(angle=90):
     global current_angle
     current_angle += angle
 
+# calibrate precise turns based on wheels circumeference, motor speed, robot dimensions
+def angle_achieved():
+    #TODO
+    print("TODO")
+
 def turn(angle):
     if angle > 0:
         turn_right(angle)
