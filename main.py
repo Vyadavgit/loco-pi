@@ -117,7 +117,7 @@ def stop():
     print("Stopped.")
 
 def turn_left(angle=90):
-    print("Turning anticlockwise: "+angle+" degrees.")
+    print("Turning anticlockwise: "+str(angle)+" degrees.")
     # Stop both motors
     stop()
     sleep(1)
@@ -139,7 +139,7 @@ def turn_left(angle=90):
     current_angle -= angle
 
 def turn_right(angle=90):
-    print("Turning clockwise: "+angle+" degrees.")    
+    print("Turning clockwise: "+str(angle)+" degrees.")    
     # Stop both motors
     stop()
     sleep(1)
