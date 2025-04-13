@@ -1,6 +1,7 @@
-import RPi.GPIO as GPIO
 from time import sleep
 from datetime import datetime
+
+import RPi.GPIO as GPIO
 
 # init configs
 GPIO.setmode(GPIO.BCM)
@@ -115,7 +116,79 @@ def stop():
     pwm2.ChangeDutyCycle(0)
     print("Stopped.")
 
+def turn_left(angle=90):
+    # Stop both motors
+    stop()
+    sleep(1)
+
+    # Motor 1 forward
+    GPIO.output(In1, GPIO.LOW)
+    GPIO.output(In2, GPIO.HIGH)
+    pwm1.ChangeDutyCycle(70)
+
+    # Motor 2 backward
+    GPIO.output(In3, GPIO.HIGH)
+    GPIO.output(In4, GPIO.LOW)
+    pwm2.ChangeDutyCycle(70)
+    sleep(angle / 90)  # Adjust the sleep time based on the angle
+
+    # Stop both motors
+    stop()
+    global current_angle
+    current_angle -= angle
+
+def turn_right(angle=90):
+    # Stop both motors
+    stop()
+    sleep(1)
+
+    # Motor 1 backward
+    GPIO.output(In1, GPIO.HIGH)
+    GPIO.output(In2, GPIO.LOW)
+    pwm1.ChangeDutyCycle(70)
+
+    # Motor 2 forward
+    GPIO.output(In3, GPIO.LOW)
+    GPIO.output(In4, GPIO.HIGH)
+    pwm2.ChangeDutyCycle(70)
+    sleep(angle / 90)  # Adjust the sleep time based on the angle
+
+    # Stop both motors
+    stop()
+    global current_angle
+    current_angle += angle
+
+def turn_back(angle=180):
+    # Stop both motors
+    stop()
+    sleep(1)
+
+    # Motor 1 backward
+    GPIO.output(In1, GPIO.HIGH)
+    GPIO.output(In2, GPIO.LOW)
+    pwm1.ChangeDutyCycle(70)
+
+    # Motor 2 backward
+    GPIO.output(In3, GPIO.HIGH)
+    GPIO.output(In4, GPIO.LOW)
+    pwm2.ChangeDutyCycle(70)
+    sleep(angle / 90)  # Adjust the sleep time based on the angle
+
+    # Stop both motors
+    stop()
+    global current_angle
+    current_angle += angle
+
+def turn(angle):
+    if angle > 0:
+        turn_right(angle)
+    elif angle < 0:
+        turn_left(-angle)
+    else:
+        return
+
 def main():
+    current_angle = 0  # Initialize the angle to 0
     try:
         while True:
             if not obstacle_detected():
@@ -125,7 +198,17 @@ def main():
                 stop()
                 print("!!...Stopped. Obstacle avoidance activated...!!")
                 while obstacle_detected_during_stop():
-                    print('\nOBSTACLE DETECTED. Rescan for next 10 seconds...')
+                    turn(-90)
+                    if not obstacle_detected_during_stop():
+                        break
+                    else:
+                        turn(180)
+                        if not obstacle_detected_during_stop():
+                            break
+                        else:
+                            turn(90)
+                            continue
+                print('\nScan for obstacles next 10 seconds...')
     except KeyboardInterrupt:
         print("Stopping...")
     # finally:
