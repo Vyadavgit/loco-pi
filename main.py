@@ -116,19 +116,20 @@ def stop():
     pwm2.ChangeDutyCycle(0)
     print("Stopped.")
 
+//TODO fix GPIO.outputs to the right motors for right turns
 def turn_left(angle=90):
     # Stop both motors
     stop()
     sleep(1)
 
-    # Motor 1 forward
-    GPIO.output(In1, GPIO.LOW)
-    GPIO.output(In2, GPIO.HIGH)
+    # Motor 1 backward - left motors backwards
+    GPIO.output(In1, GPIO.HIGH)
+    GPIO.output(In2, GPIO.LOW)
     pwm1.ChangeDutyCycle(70)
 
-    # Motor 2 backward
-    GPIO.output(In3, GPIO.HIGH)
+    # Motor 2 forward - right motors forward
     GPIO.output(In4, GPIO.LOW)
+    GPIO.output(In3, GPIO.HIGH)
     pwm2.ChangeDutyCycle(70)
     sleep(angle / 90)  # Adjust the sleep time based on the angle
 
@@ -142,15 +143,15 @@ def turn_right(angle=90):
     stop()
     sleep(1)
 
-    # Motor 1 backward
-    GPIO.output(In1, GPIO.HIGH)
-    GPIO.output(In2, GPIO.LOW)
-    pwm1.ChangeDutyCycle(70)
-
-    # Motor 2 forward
-    GPIO.output(In3, GPIO.LOW)
+    # Motor 2 backward - right motors backwards
     GPIO.output(In4, GPIO.HIGH)
+    GPIO.output(In3, GPIO.LOW)
     pwm2.ChangeDutyCycle(70)
+
+    # Motor 1 forward - left motors forward
+    GPIO.output(In1, GPIO.LOW)
+    GPIO.output(In2, GPIO.HIGH)
+    pwm1.ChangeDutyCycle(70)
     sleep(angle / 90)  # Adjust the sleep time based on the angle
 
     # Stop both motors
