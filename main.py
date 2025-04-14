@@ -68,6 +68,7 @@ def obstacle_detected():
     return obstacle
 
 def obstacle_detected_during_stop():
+    print('\nScan for obstacles next 10 seconds...')
     init_timestamp = datetime.now()
     loop_count = 0
     obstacle_detected_count = 0
@@ -195,7 +196,6 @@ def main():
                         else:
                             turn(90)
                             continue
-                print('\nScan for obstacles next 10 seconds...')
     except KeyboardInterrupt:
         print("Stopping...")
     # finally:
